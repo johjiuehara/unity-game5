@@ -1,4 +1,4 @@
-# unity-game5
+# Hachioji rpg
 Will start this as my weekend project to deal with my sanity and the lockdown period.
 
 I will be tackling about the following concepts in mmorpg
