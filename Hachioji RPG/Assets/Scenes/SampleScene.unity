@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -260,6 +260,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 276181773}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &648349300 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8107129313004419136, guid: 38953023efbe645e78ebe3f461b8c93b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1604977912}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &648349311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648349300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018965cb100c148f6823bd0ef4d4945b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseDistance: 5
 --- !u!1001 &711295019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -810,6 +829,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8107129313004419142, guid: 38953023efbe645e78ebe3f461b8c93b,
+        type: 3}
+      propertyPath: m_Speed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38953023efbe645e78ebe3f461b8c93b, type: 3}
 --- !u!1001 &1621854815
@@ -952,6 +976,11 @@ PrefabInstance:
     - target: {fileID: 5721623218273874956, guid: c8d16f9eb1ffc43799c3858ad1efca11,
         type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721623218273874956, guid: c8d16f9eb1ffc43799c3858ad1efca11,
+        type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5214896862947296405, guid: c8d16f9eb1ffc43799c3858ad1efca11,
