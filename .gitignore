@@ -42,6 +42,8 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+.DS_Store
+Hachioji RPG/Unity_lic.alf
 
 # Unity3D generated meta files
 *.pidb.meta
