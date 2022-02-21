@@ -34,9 +34,15 @@ namespace RPG.SceneManagement
             DontDestroyOnLoad(gameObject);
             Fader fader = FindObjectOfType<Fader>();
             yield return fader.FadeOut(FadeOutTimeout);
+            // save curr level
+            SaverApi saver = FindObjectOfType<SaverApi>();
+            saver.Save();
             yield return SceneManager.LoadSceneAsync(sceneToBeLoaded);
+            saver.Load();
+            // load curr level
             Portal otherPortal = GetOtherPortal();
             updatePlayer(otherPortal);
+            saver.Save();
             yield return new WaitForSeconds(WaitTimeout);
             yield return fader.FadeIn(FadeInTimeout);
             Destroy(gameObject);
