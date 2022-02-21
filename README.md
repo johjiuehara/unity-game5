@@ -7,3 +7,4 @@ I will be tackling about the following concepts in mmorpg
 ・Items usage
 ・Multiplayer
 ・Chat system
+・In-game shop（課金）
