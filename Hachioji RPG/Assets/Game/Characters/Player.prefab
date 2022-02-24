@@ -658,6 +658,17 @@ PrefabInstance:
       propertyPath: uniqueIdentifier
       value: player-unique-id0001
       objectReference: {fileID: 0}
+    - target: {fileID: 3351412742102039156, guid: 78a4e6302deb44271b9c4ca96c59572c,
+        type: 3}
+      propertyPath: weaponPrefab
+      value: 
+      objectReference: {fileID: 5486958773482342077, guid: 37e426fb4a23e4739aae52d382574414,
+        type: 3}
+    - target: {fileID: 3351412742102039156, guid: 78a4e6302deb44271b9c4ca96c59572c,
+        type: 3}
+      propertyPath: weaponHandPlace
+      value: 
+      objectReference: {fileID: 141422226562669323}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78a4e6302deb44271b9c4ca96c59572c, type: 3}
 --- !u!4 &5214896862947296405 stripped
