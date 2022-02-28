@@ -9,18 +9,18 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
-        [SerializeField] float weaponRange = 2f;
         [SerializeField] float timeBetweenAttacks = 1f;
-        [SerializeField] float weaponDamage = 5f;
-        [SerializeField] GameObject weaponPrefab = null;
-        [SerializeField] Transform weaponHandPlace = null;
+        [SerializeField] Transform rightHandTransform = null;
+        [SerializeField] Transform leftHandTransform = null;
+        [SerializeField] Weapon defaultWeapon = null;
 
         Health target;
         float timeSinceLastAttack = 0;
+        Weapon currentWeapon = null;
 
         private void Start()
         {
-            EquipWeapon();
+            EquipWeapon(defaultWeapon);
         }
 
         private void Update()
@@ -69,12 +69,25 @@ namespace RPG.Combat
         void Hit()
         {
             if (!target) return;
-            target.TakeDamage(weaponDamage);
+            if (currentWeapon.IsRanged())
+            {
+                currentWeapon.ShootProjectile(rightHandTransform, leftHandTransform, target);
+            }
+            else target.TakeDamage(currentWeapon.GetDamage());
         }
+
+        void Shoot()
+        {
+            Hit();
+        }
+
+        /**
+         * 
+         * **/
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
+            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.GetRange();
         }
 
         public void Attack(GameObject combatTarget)
@@ -96,9 +109,11 @@ namespace RPG.Combat
             GetComponent<Animator>().SetTrigger("stopAttack");
         }
 
-        private void EquipWeapon()
+        public void EquipWeapon(Weapon weapon)
         {
-            Instantiate(weaponPrefab, weaponHandPlace);
+            currentWeapon = weapon;
+            Animator animator = GetComponent<Animator>();
+            weapon.Create(rightHandTransform, leftHandTransform, animator);
         }
     }
 }

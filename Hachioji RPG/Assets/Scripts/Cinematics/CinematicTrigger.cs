@@ -10,6 +10,14 @@ namespace RPG.Cinematics
     {
         bool isAlreadyTriggered = false;
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                GetComponent<PlayableDirector>().Stop();
+            }
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (!isAlreadyTriggered && other.gameObject.tag == "Player")
