@@ -31,13 +31,14 @@ namespace RPG.SceneManagement
 
         private IEnumerator Transition()
         {
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(transform.root.gameObject);
             Fader fader = FindObjectOfType<Fader>();
             yield return fader.FadeOut(FadeOutTimeout);
             // save curr level
             SaverApi saver = FindObjectOfType<SaverApi>();
             saver.Save();
-            yield return SceneManager.LoadSceneAsync(sceneToBeLoaded);
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneToBeLoaded);
+            yield return asyncLoad;
             saver.Load();
             // load curr level
             Portal otherPortal = GetOtherPortal();
@@ -45,7 +46,7 @@ namespace RPG.SceneManagement
             saver.Save();
             yield return new WaitForSeconds(WaitTimeout);
             yield return fader.FadeIn(FadeInTimeout);
-            Destroy(gameObject);
+            Destroy(transform.root.gameObject);
         }
 
         private void updatePlayer(Portal otherPortal)
