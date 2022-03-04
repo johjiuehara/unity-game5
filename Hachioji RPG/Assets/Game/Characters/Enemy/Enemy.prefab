@@ -14,6 +14,24 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5399382591445294829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8107129313004419136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018965cb100c148f6823bd0ef4d4945b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseDistance: 5
+  suspicionTime: 3
+  patrolPath: {fileID: 0}
+  waypointTolerance: 1
+  waypointDwellTime: 3
+  patrolSpeedFraction: 0.2
 --- !u!114 &5987022422570344501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -881,6 +899,11 @@ PrefabInstance:
       propertyPath: leftHandTransform
       value: 
       objectReference: {fileID: 964268957970036216}
+    - target: {fileID: 3535040071504890597, guid: 78a4e6302deb44271b9c4ca96c59572c,
+        type: 3}
+      propertyPath: characterJob
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78a4e6302deb44271b9c4ca96c59572c, type: 3}
 --- !u!4 &8627221478193645785 stripped

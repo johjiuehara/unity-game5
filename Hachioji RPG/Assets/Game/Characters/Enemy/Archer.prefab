@@ -86,7 +86,7 @@ PrefabInstance:
     - target: {fileID: 7549854366401194567, guid: 38953023efbe645e78ebe3f461b8c93b,
         type: 3}
       propertyPath: timeBetweenAttacks
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7549854366401194567, guid: 38953023efbe645e78ebe3f461b8c93b,
         type: 3}
@@ -98,6 +98,11 @@ PrefabInstance:
       propertyPath: leftHandTransform
       value: 
       objectReference: {fileID: 6070562127771922125}
+    - target: {fileID: 5399382591445294829, guid: 38953023efbe645e78ebe3f461b8c93b,
+        type: 3}
+      propertyPath: chaseDistance
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8107129313004419143, guid: 38953023efbe645e78ebe3f461b8c93b,
         type: 3}
       propertyPath: maxSpeed
@@ -608,6 +613,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 01b2546c969fe814794af634cb4534f4, type: 2}
+    - target: {fileID: 3295531172676908322, guid: 38953023efbe645e78ebe3f461b8c93b,
+        type: 3}
+      propertyPath: characterJob
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8595709902639454934, guid: 38953023efbe645e78ebe3f461b8c93b,
+        type: 3}
+      propertyPath: characterJob
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38953023efbe645e78ebe3f461b8c93b, type: 3}
 --- !u!4 &6070562127771904839 stripped
