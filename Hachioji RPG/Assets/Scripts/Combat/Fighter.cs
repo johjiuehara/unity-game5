@@ -1,19 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using RPG.Core;
+﻿using RPG.Core;
 using RPG.Movement;
+using RPG.Saving;
+using RPG.Attributes;
 using UnityEngine;
 
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IAction
+    public class Fighter : MonoBehaviour, IAction, ISaveable
     {
-        [SerializeField] float weaponRange = 2f;
         [SerializeField] float timeBetweenAttacks = 1f;
-        [SerializeField] float weaponDamage = 5f;
+        [SerializeField] Transform rightHandTransform = null;
+        [SerializeField] Transform leftHandTransform = null;
+        [SerializeField] Weapon defaultWeapon = null;
+
         Health target;
         float timeSinceLastAttack = 0;
+        Weapon currentWeapon = null;
+
+        private void Start()
+        {
+            if (!currentWeapon) EquipWeapon(defaultWeapon);
+        }
 
         private void Update()
         {
@@ -61,12 +69,25 @@ namespace RPG.Combat
         void Hit()
         {
             if (!target) return;
-            target.TakeDamage(weaponDamage);
+            if (currentWeapon.IsRanged())
+            {
+                currentWeapon.ShootProjectile(rightHandTransform, leftHandTransform, target);
+            }
+            else target.TakeDamage(currentWeapon.GetDamage());
         }
+
+        void Shoot()
+        {
+            Hit();
+        }
+
+        /**
+         * 
+         * **/
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
+            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.GetRange();
         }
 
         public void Attack(GameObject combatTarget)
@@ -86,6 +107,30 @@ namespace RPG.Combat
         {
             GetComponent<Animator>().ResetTrigger("attack");
             GetComponent<Animator>().SetTrigger("stopAttack");
+        }
+
+        public void EquipWeapon(Weapon weapon)
+        {
+            if (currentWeapon) UnequipCurrWeapon();
+            currentWeapon = weapon;
+            Animator animator = GetComponent<Animator>();
+            weapon.Create(rightHandTransform, leftHandTransform, animator);
+        }
+
+        private void UnequipCurrWeapon()
+        {
+            currentWeapon.Destroy();
+        }
+
+        public object CaptureState()
+        {
+            return currentWeapon.name;
+        }
+
+        public void RestoreState(object state)
+        {
+            string weapon = state.ToString();
+            EquipWeapon(Resources.Load<Weapon>(weapon));
         }
     }
 }

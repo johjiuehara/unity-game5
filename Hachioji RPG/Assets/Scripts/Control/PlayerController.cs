@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using RPG.Movement;
-using System;
 using RPG.Combat;
-using RPG.Core;
+using RPG.Attributes;
 
 namespace RPG.Control
 {
