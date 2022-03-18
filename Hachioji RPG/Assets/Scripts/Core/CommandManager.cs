@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace RPG.Core
 {
-    public class ActionScheduler : MonoBehaviour
+    public class CommandManager : MonoBehaviour
     {
         IAction currentAction;
 

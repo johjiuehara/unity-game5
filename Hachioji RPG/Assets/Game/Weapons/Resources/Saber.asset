@@ -19,3 +19,4 @@ MonoBehaviour:
   weaponDamage: 10
   isRightHand: 0
   projectile: {fileID: 0}
+  isSharp: 1

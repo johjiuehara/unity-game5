@@ -27,7 +27,7 @@ namespace RPG.Movement
 
         public void StartMoveAction(Vector3 destination, float speedFraction)
         {
-            GetComponent<ActionScheduler>().StartAction(this);
+            GetComponent<CommandManager>().StartAction(this);
             MoveTo(destination, speedFraction);
         }
 

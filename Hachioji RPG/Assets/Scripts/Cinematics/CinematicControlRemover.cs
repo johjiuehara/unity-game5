@@ -17,9 +17,7 @@ namespace RPG.Cinematics
 
         void DisableControl(PlayableDirector pd)
         {
-            print("cancelling action");
-            print(player);
-            player.GetComponent<ActionScheduler>().CancelCurrentAction();
+            player.GetComponent<CommandManager>().CancelCurrentAction();
             player.GetComponent<PlayerController>().enabled = false;
         }
 

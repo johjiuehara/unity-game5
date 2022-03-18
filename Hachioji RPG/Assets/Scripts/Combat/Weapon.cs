@@ -1,3 +1,4 @@
+using System;
 using RPG.Attributes;
 using UnityEngine;
 
@@ -10,10 +11,11 @@ namespace RPG.Combat
         [SerializeField] GameObject weaponPrefab = null;
         [SerializeField] float weaponRange = 2f;
         [SerializeField] float weaponDamage = 5f;
+        [SerializeField] float percentModifier = 5f;
         [SerializeField] bool isRightHand = true;
         [SerializeField] Projectile projectile = null;
 
-        private GameObject weapon = null;
+        const string prefabStringRef = "Weapon";
 
         public float GetDamage() { return weaponDamage; }
 
@@ -21,12 +23,16 @@ namespace RPG.Combat
 
         public bool IsRanged() { return projectile != null; }
 
+        public float GetPercentModifier() { return percentModifier; }
+
         public void Create(Transform rightHand, Transform leftHand, Animator animator)
         {
+            UnequipWeapon(rightHand, leftHand);
             if (weaponPrefab)
             {
                 Transform handTransform = GetHandTransform(rightHand, leftHand);
-                weapon = Instantiate(weaponPrefab, handTransform);
+                GameObject weapon = Instantiate(weaponPrefab, handTransform);
+                weapon.name = prefabStringRef;
             }
 
             var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
@@ -40,9 +46,13 @@ namespace RPG.Combat
             }
         }
 
-        public void Destroy()
+        private static void UnequipWeapon(Transform rightHand, Transform leftHand)
         {
-            Destroy(weapon);
+            Transform currentWeapon = null;
+            currentWeapon = leftHand.Find(prefabStringRef);
+            if (!currentWeapon) currentWeapon = rightHand.Find(prefabStringRef);
+            if (!currentWeapon) return;
+            Destroy(currentWeapon.gameObject);
         }
 
         private Transform GetHandTransform(Transform rightHand, Transform leftHand)
@@ -53,10 +63,10 @@ namespace RPG.Combat
             return handTransform;
         }
 
-        public void ShootProjectile(Transform rightHand, Transform leftHand, Health target)
+        public void ShootProjectile(Transform rightHand, Transform leftHand, Health target, GameObject initiator)
         {
             Projectile projectileInstance = Instantiate(projectile, GetHandTransform(rightHand, leftHand).position, Quaternion.identity);
-            projectileInstance.setTarget(target, weaponDamage);
+            projectileInstance.setTarget(target, initiator, weaponDamage);
         }
     }
 }
