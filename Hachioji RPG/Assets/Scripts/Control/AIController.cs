@@ -95,7 +95,7 @@ namespace RPG.Control
 
         private void SuspicionBehaviour()
         {
-            GetComponent<ActionScheduler>().CancelCurrentAction();
+            GetComponent<CommandManager>().CancelCurrentAction();
         }
 
         private void AttackBehaviour()

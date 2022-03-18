@@ -3,11 +3,13 @@ using RPG.Movement;
 using RPG.Saving;
 using RPG.Attributes;
 using UnityEngine;
-
+using RPG.Stats;
+using System;
+using System.Collections.Generic;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IAction, ISaveable
+    public class Fighter : MonoBehaviour, IAction, ISaveable, IModify
     {
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] Transform rightHandTransform = null;
@@ -69,11 +71,15 @@ namespace RPG.Combat
         void Hit()
         {
             if (!target) return;
+            float damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
             if (currentWeapon.IsRanged())
             {
-                currentWeapon.ShootProjectile(rightHandTransform, leftHandTransform, target);
+                currentWeapon.ShootProjectile(rightHandTransform, leftHandTransform, target, gameObject);
             }
-            else target.TakeDamage(currentWeapon.GetDamage());
+            else
+            {
+                target.TakeDamage(gameObject, damage);
+            }
         }
 
         void Shoot()
@@ -92,7 +98,7 @@ namespace RPG.Combat
 
         public void Attack(GameObject combatTarget)
         {
-            GetComponent<ActionScheduler>().StartAction(this); 
+            GetComponent<CommandManager>().StartAction(this); 
             target = combatTarget.GetComponent<Health>();
         }
 
@@ -111,15 +117,15 @@ namespace RPG.Combat
 
         public void EquipWeapon(Weapon weapon)
         {
-            if (currentWeapon) UnequipCurrWeapon();
             currentWeapon = weapon;
             Animator animator = GetComponent<Animator>();
             weapon.Create(rightHandTransform, leftHandTransform, animator);
+            
         }
 
-        private void UnequipCurrWeapon()
+        public Health GetTarget()
         {
-            currentWeapon.Destroy();
+            return target;
         }
 
         public object CaptureState()
@@ -131,6 +137,22 @@ namespace RPG.Combat
         {
             string weapon = state.ToString();
             EquipWeapon(Resources.Load<Weapon>(weapon));
+        }
+
+        public IEnumerable<float> GetModifier(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return currentWeapon.GetDamage();
+            }
+        }
+
+        public IEnumerable<float> GetPercentModifier(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return currentWeapon.GetPercentModifier();
+            }
         }
     }
 }

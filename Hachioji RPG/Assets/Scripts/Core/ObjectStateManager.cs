@@ -4,7 +4,7 @@ using System;
 
 namespace RPG.Core
 {
-    public class PersistentObjectInitializer : MonoBehaviour
+    public class ObjectStateManager : MonoBehaviour
     {
         [SerializeField] GameObject persistentObjectPrefab;
         static bool hasInitialized = false;

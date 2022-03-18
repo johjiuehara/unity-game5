@@ -11,7 +11,6 @@ namespace RPG.SceneManagement
         const string SaveFile = "savefile";
         SavingSystem saver;
         [SerializeField] float FadeInTime = 0.5f;
-        // Update is called once per frame
 
         IEnumerator Start()
         {

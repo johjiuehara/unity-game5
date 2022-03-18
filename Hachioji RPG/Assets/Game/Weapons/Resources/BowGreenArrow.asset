@@ -20,3 +20,4 @@ MonoBehaviour:
   isRightHand: 0
   projectile: {fileID: 595531634893145159, guid: 4f005f45e8ba144c392cce11d7bc989e,
     type: 3}
+  isSharp: 1
