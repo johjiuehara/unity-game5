@@ -46,11 +46,6 @@ namespace RPG.Control
             guardPosition.ForceInit();
         }
 
-        private void Start()
-        {
-            guardPosition = transform.position;
-        }
-
         private void Update()
         {
             if (health.IsDead()) return;
