@@ -63,10 +63,10 @@ namespace RPG.Combat
             return handTransform;
         }
 
-        public void ShootProjectile(Transform rightHand, Transform leftHand, Health target, GameObject initiator)
+        public void ShootProjectile(Transform rightHand, Transform leftHand, Health target, GameObject initiator, float totalDamage)
         {
             Projectile projectileInstance = Instantiate(projectile, GetHandTransform(rightHand, leftHand).position, Quaternion.identity);
-            projectileInstance.setTarget(target, initiator, weaponDamage);
+            projectileInstance.setTarget(target, initiator, totalDamage);
         }
     }
 }
