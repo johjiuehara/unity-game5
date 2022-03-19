@@ -18,7 +18,16 @@ namespace RPG.Attributes
         {
             baseStats = GetComponent<BaseStats>();
             healthPoints = baseStats.GetStat(Stat.Health);
+        }
+
+        private void OnEnable()
+        {
             baseStats.onLevelUp += RecoverHealth;
+        }
+
+        private void OnDisable()
+        {
+            baseStats.onLevelUp -= RecoverHealth;
         }
 
         private void RecoverHealth()
