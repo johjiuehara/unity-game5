@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using RPG.Attributes;
 using UnityEngine;
+using Utilities;
 
 namespace RPG.Stats
 {
@@ -17,18 +18,14 @@ namespace RPG.Stats
         public delegate void levelUpDelegate();
         public event levelUpDelegate onLevelUp;
 
-        int currentLevel = 0;
+        ResettableLazy<int> currentLevel;
 
         Experience experience;
 
         private void Awake()
         {
             experience = GetComponent<Experience>();
-        }
-
-        private void Start()
-        {
-            currentLevel = CalculateLevel();
+            currentLevel = new ResettableLazy<int>(CalculateLevel);
         }
 
         private void OnEnable()
@@ -44,9 +41,9 @@ namespace RPG.Stats
         private void UpdateLevel()
         {
             int newLevel = CalculateLevel();
-            if (newLevel > currentLevel)
+            if (newLevel > currentLevel.value)
             {
-                currentLevel = newLevel;
+                currentLevel.value = newLevel;
                 SpawnLevelUpFx();
                 onLevelUp();
             }
@@ -95,8 +92,7 @@ namespace RPG.Stats
 
         public int GetLevel()
         {
-            if (currentLevel == 0) currentLevel = CalculateLevel();
-            return currentLevel;
+            return currentLevel.value;
         }
 
         private int CalculateLevel()
