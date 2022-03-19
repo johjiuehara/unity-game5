@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using RPG.Attributes;
 using UnityEngine;
+using Utilities;
 
 namespace RPG.Stats
 {
@@ -17,21 +18,32 @@ namespace RPG.Stats
         public delegate void levelUpDelegate();
         public event levelUpDelegate onLevelUp;
 
-        int currentLevel = 0;
+        ResettableLazy<int> currentLevel;
 
-        private void Start()
+        Experience experience;
+
+        private void Awake()
         {
-            currentLevel = CalculateLevel();
-            Experience experience = GetComponent<Experience>();
+            experience = GetComponent<Experience>();
+            currentLevel = new ResettableLazy<int>(CalculateLevel);
+        }
+
+        private void OnEnable()
+        {
             if (experience) experience.onReceiveXP += UpdateLevel;
+        }
+
+        private void OnDisable()
+        {
+            if (experience) experience.onReceiveXP -= UpdateLevel;
         }
 
         private void UpdateLevel()
         {
             int newLevel = CalculateLevel();
-            if (newLevel > currentLevel)
+            if (newLevel > currentLevel.value)
             {
-                currentLevel = newLevel;
+                currentLevel.value = newLevel;
                 SpawnLevelUpFx();
                 onLevelUp();
             }
@@ -44,7 +56,6 @@ namespace RPG.Stats
 
         public float GetStat(Stat stat)
         {
-            print("base stat " + GetBaseStat(stat));
             return (GetBaseStat(stat) + GetModifier(stat)) * (1 + GetPercentModifier(stat) / 100);
         }
 
@@ -81,8 +92,7 @@ namespace RPG.Stats
 
         public int GetLevel()
         {
-            if (currentLevel == 0) currentLevel = CalculateLevel();
-            return currentLevel;
+            return currentLevel.value;
         }
 
         private int CalculateLevel()

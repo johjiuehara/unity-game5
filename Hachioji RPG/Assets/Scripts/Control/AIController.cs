@@ -3,6 +3,8 @@ using RPG.Core;
 using RPG.Movement;
 using RPG.Attributes;
 using UnityEngine;
+using Utilities;
+using System;
 
 namespace RPG.Control
 {
@@ -19,19 +21,29 @@ namespace RPG.Control
         Fighter fighter;
         GameObject player;
         Health health;
-        Vector3 guardPosition;
+        ResettableLazy<Vector3> guardPosition;
         Mover mover;
         float timeSinceLastSawPlayer = Mathf.Infinity;
         float timeSinceArrivedAtWaypoint = Mathf.Infinity;
         int currentWaypointIndex = 0;
 
-        private void Start()
+        private void Awake()
         {
             fighter = GetComponent<Fighter>();
             health = GetComponent<Health>();
             player = GameObject.FindWithTag("Player");
-            guardPosition = transform.position;
             mover = GetComponent<Mover>();
+            guardPosition = new ResettableLazy<Vector3>(GetPosition);
+        }
+
+        private Vector3 GetPosition()
+        {
+            return transform.position;
+        }
+
+        private void Start()
+        {
+            guardPosition.ForceInit();
         }
 
         private void Update()
@@ -61,7 +73,7 @@ namespace RPG.Control
         private void PatrolBehaviour()
         {
             fighter.Cancel();
-            Vector3 nextPosition = guardPosition;
+            Vector3 nextPosition = guardPosition.value;
             if (patrolPath != null)
             {
                 if (AtWaypoint())

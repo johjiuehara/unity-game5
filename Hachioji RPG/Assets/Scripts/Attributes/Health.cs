@@ -3,28 +3,43 @@ using System.Collections;
 using RPG.Saving;
 using RPG.Core;
 using RPG.Stats;
+using Utilities;
 using System;
 
 namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISaveable
     {
-        [SerializeField] float healthPoints = 100f;
         [SerializeField] float recoveryPercentage = 50f;
         bool isDead = false;
+        ResettableLazy<float> healthPoints;
         BaseStats baseStats;
 
         private void Awake()
         {
             baseStats = GetComponent<BaseStats>();
-            healthPoints = baseStats.GetStat(Stat.Health);
+            healthPoints = new ResettableLazy<float>(GetInitHealthPoints);
+        }
+
+        private float GetInitHealthPoints()
+        {
+            return baseStats.GetStat(Stat.Health);
+        }
+
+        private void OnEnable()
+        {
             baseStats.onLevelUp += RecoverHealth;
+        }
+
+        private void OnDisable()
+        {
+            baseStats.onLevelUp -= RecoverHealth;
         }
 
         private void RecoverHealth()
         {
             float recoverValue = baseStats.GetStat(Stat.Health) * (recoveryPercentage / 100);
-            healthPoints = Mathf.Max(healthPoints, recoverValue);
+            healthPoints.value = Mathf.Max(healthPoints.value, recoverValue);
         }
 
         public bool IsDead()
@@ -34,9 +49,8 @@ namespace RPG.Attributes
 
         public void TakeDamage(GameObject initiator, float damage)
         {
-            print("took damage " + damage);
-            healthPoints = Mathf.Max(healthPoints - damage, 0);
-            if (healthPoints == 0)
+            healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
+            if (healthPoints.value == 0)
             {
                 Die();
                 AwardExperience(initiator);
@@ -53,7 +67,7 @@ namespace RPG.Attributes
 
         public float GetHp()
         {
-            return healthPoints;
+            return healthPoints.value;
         }
 
         public float GetMaxHp()
@@ -63,7 +77,7 @@ namespace RPG.Attributes
 
         public float GetPercentage()
         {
-            return 100 * (healthPoints / baseStats.GetStat(Stat.Health));
+            return 100 * (healthPoints.value / baseStats.GetStat(Stat.Health));
         }
 
         private void Die()
@@ -81,8 +95,8 @@ namespace RPG.Attributes
 
         public void RestoreState(object state)
         {
-            healthPoints = (float)state;
-            if (healthPoints == 0) Die();
+            healthPoints.value = (float)state;
+            if (healthPoints.value == 0) Die();
             else isDead = false;
         }
 
