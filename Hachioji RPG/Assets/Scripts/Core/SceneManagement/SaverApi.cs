@@ -14,7 +14,7 @@ namespace RPG.SceneManagement
 
         private void Awake()
         {
-            StartCoroutine(LoadLastSavepoint())
+            StartCoroutine(LoadLastSavepoint());
         }
 
         IEnumerator LoadLastSavepoint()

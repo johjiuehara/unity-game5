@@ -86,7 +86,7 @@ namespace RPG.Combat
             float damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
             if (currentWeapon.value.IsRanged())
             {
-                currentWeapon.value.ShootProjectile(rightHandTransform, leftHandTransform, target, gameObject);
+                currentWeapon.value.ShootProjectile(rightHandTransform, leftHandTransform, target, gameObject, damage);
             }
             else
             {
