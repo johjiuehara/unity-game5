@@ -44,7 +44,6 @@ namespace RPG.Stats
 
         public float GetStat(Stat stat)
         {
-            print("base stat " + GetBaseStat(stat));
             return (GetBaseStat(stat) + GetModifier(stat)) * (1 + GetPercentModifier(stat) / 100);
         }
 
