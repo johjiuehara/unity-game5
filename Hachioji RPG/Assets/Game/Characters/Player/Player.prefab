@@ -26,6 +26,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2177500211dea4405b66680bb14b7ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cursorIconMappings:
+  - type: 0
+    hotspot: {x: 0, y: 0}
+    texure: {fileID: 2800000, guid: bb57a4c5a1ec38a41949d0975ede9ac1, type: 3}
+  - type: 2
+    hotspot: {x: 0, y: 0}
+    texure: {fileID: 2800000, guid: ce683041f000c7c48b73e8fbda566384, type: 3}
+  - type: 1
+    hotspot: {x: 0, y: 0}
+    texure: {fileID: 2800000, guid: f8d327f88e3408f42b3dc6850224b676, type: 3}
 --- !u!114 &8252470155009120092
 MonoBehaviour:
   m_ObjectHideFlags: 0
